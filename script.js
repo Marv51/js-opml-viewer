@@ -56,6 +56,12 @@ remove_dropzone();
 function remove_dropzone(){
 	var dropzone = document.getElementById("dropzone");
 	dropzone.parentNode.removeChild(dropzone);
+	var orElem = document.getElementById("or");
+	orElem.parentNode.removeChild(orElem);
+	var buttonElem = document.getElementById("fileSelect");
+	buttonElem.parentNode.removeChild(buttonElem);
+	var fileElem = document.getElementById("fileElem");
+	fileElem.parentNode.removeChild(fileElem);
 }
 
 function drop(e){
@@ -79,10 +85,27 @@ function dragexit(e){
 }
 
 function run(e){
+	//Init Dropzone
 	var dropzone = document.getElementById("dropzone");
 	dropzone.addEventListener("dragenter", dragenter, false);
 	dropzone.addEventListener("dragexit", dragexit, false);
 	dropzone.addEventListener("drop", drop, false);
+
+	//Init File Input
+	document.getElementById("fileSelect").addEventListener("click", function (e) {
+		var fileElem = document.getElementById("fileElem");
+		if (fileElem) {
+		//send Click to input field
+		fileElem.click();
+		}
+		e.preventDefault(); // prevent navigation to "#"
+	}, false);
+
+	var fileElem = document.getElementById("fileElem");
+	fileElem.addEventListener("change", function (e){
+		handleFiles(this.files);
+	}, false);
 }
+
 
 document.addEventListener("DOMContentLoaded",run);
